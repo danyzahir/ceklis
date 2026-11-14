@@ -1,0 +1,10 @@
+# AI Agent configurations, rules, and skills (STRICTLY ISOLATED)
+.agents/
+.agent/
+.gemini/
+
+# OS and Environment
+.DS_Store
+Thumbs.db
+*.log
+
