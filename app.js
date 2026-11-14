@@ -4,16 +4,8 @@
  * Responsif untuk semua ukuran layar smartphone & desktop
  */
 
-// Data awal (7 gradasi tumpukan kapsul biru sesuai referensi visual)
-const DEFAULT_TODOS = [
-  { id: 'todo-1', text: 'Perencanaan target harian & review prioritas', completed: true, shade: 1 },
-  { id: 'todo-2', text: 'Meeting koordinasi tim proyek', completed: true, shade: 2 },
-  { id: 'todo-3', text: 'Selesaikan laporan analitik mingguan', completed: false, shade: 3 },
-  { id: 'todo-4', text: 'Koding fitur baru & pengujian antarmuka', completed: false, shade: 4 },
-  { id: 'todo-5', text: 'Membaca buku 20 menit', completed: false, shade: 5 },
-  { id: 'todo-6', text: 'Olahraga peregangan sore', completed: false, shade: 6 },
-  { id: 'todo-7', text: 'Evaluasi pencapaian hari ini', completed: false, shade: 7 }
-];
+// Ceklis Kegiatan - Todo List
+// Tanpa dummy data (mulai dari kosong)
 
 class TodoApp {
   constructor() {
@@ -53,13 +45,18 @@ class TodoApp {
     const saved = localStorage.getItem('ceklish_todos');
     if (saved) {
       try {
-        this.todos = JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        // Bersihkan data dummy bawaan sebelumnya jika masih tersimpan di browser
+        const dummyIds = ['todo-1', 'todo-2', 'todo-3', 'todo-4', 'todo-5', 'todo-6', 'todo-7'];
+        this.todos = Array.isArray(parsed) 
+          ? parsed.filter(t => !dummyIds.includes(t.id))
+          : [];
+        this.saveTodos();
       } catch (e) {
-        this.todos = [...DEFAULT_TODOS];
+        this.todos = [];
       }
     } else {
-      this.todos = [...DEFAULT_TODOS];
-      this.saveTodos();
+      this.todos = [];
     }
   }
 
